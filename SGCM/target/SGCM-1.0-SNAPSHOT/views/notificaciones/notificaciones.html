@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGCM</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="notificaciones.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-light">
+    <div class="layout">
+        <aside class="sidebar bg-primary text-white p-3 d-flex flex-column shadow-sm">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h2 class="h4 mb-0 fw-bold">SGCM</h2>
+                <button class="btn btn-outline-light btn-sm d-lg-none" onclick="toggleSidebar()" type="button">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <ul class="nav nav-pills flex-column gap-2">
+
+                <li class="nav-item">
+                    <a href="../dashboard/dashboard.html"
+                        class="btn btn-primary w-100 text-start d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-house"></i>
+                        <span class="sidebar-label">Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="../campanias/campanias.html"
+                        class="btn btn-primary w-100 text-start d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-bullhorn"></i>
+                        <span class="sidebar-label">Campañas</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="../tareas/tareas.html"
+                        class="btn btn-primary w-100 text-start d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span class="sidebar-label">Tareas</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="notificaciones.html"
+                        class="btn btn-primary w-100 text-start d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="sidebar-label">Notificaciones</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="../reportes/reportes.html"
+                        class="btn btn-primary w-100 text-start d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span class="sidebar-label">Reportes</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="../usuarios/usuarios.html"
+                        class="btn btn-primary w-100 text-start d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="sidebar-label">Usuarios</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="../auditoria/auditoria.html"
+                        class="btn btn-primary w-100 text-start d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                        <span class="sidebar-label">Auditoría</span>
+                    </a>
+                </li>
+
+            </ul>
+        </aside>
+
+        <div class="main flex-grow-1 d-flex flex-column">
+            <header class="navbar navbar-light bg-white border-bottom px-3 py-2 shadow-sm">
+                <button class="btn btn-light border toggle-btn me-3" onclick="toggleSidebar()" type="button">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="flex-grow-1 me-3">
+                    <input class="form-control" placeholder="Buscar..." />
+                </div>
+
+                <button class="btn btn-danger d-flex align-items-center gap-2 logout-btn" onclick="logout()"
+                    type="button">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Salir</span>
+                </button>
+            </header>
+
+            <div id="contenido" class="flex-grow-1 p-4">
+                <div class="container-fluid p-0">
+
+
+                    <div class="container-fluid p-0">
+                        <div
+                            class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-4">
+                            <div>
+                                <h1 class="h3 fw-bold mb-1">Notificaciones</h1>
+                                <p class="text-muted mb-0">Consulta tus mensajes y alertas recientes</p>
+                            </div>
+                        </div>
+
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-body">
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-12 col-md-8">
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-white">
+                                                <i class="fa fa-search"></i>
+                                            </span>
+                                            <input id="buscarNotificacion" class="form-control"
+                                                placeholder="Buscar notificaciones..."
+                                                oninput="filtrarNotificaciones()">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <select id="filtroNotificacion" class="form-select"
+                                            onchange="filtrarNotificaciones()">
+                                            <option value="TODAS">Todas</option>
+                                            <option value="NO_LEIDAS">No leídas</option>
+                                            <option value="LEIDAS">Leídas</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="listaNotificaciones" class="d-flex flex-column gap-3"></div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="notificaciones.js"></script>
+</body>
+
+</html>

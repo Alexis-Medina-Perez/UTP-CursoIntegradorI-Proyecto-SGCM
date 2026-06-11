@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGCM</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="campanias.css">
+</head>
+
+<body class="bg-light" onload="cargarVista('campanias/campanias.html')">
+    <div class="layout">
+        <aside class="sidebar bg-primary text-white p-3 d-flex flex-column shadow-sm">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h2 class="h4 mb-0 fw-bold">SGCM</h2>
+                <button class="btn btn-outline-light btn-sm d-lg-none" onclick="toggleSidebar()" type="button">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <ul class="nav nav-pills flex-column gap-2">
+
+
+                <li class="nav-item">
+                    <a href="../dashboard/dashboard.html"
+                        class="btn btn-primary w-100 text-start d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-house"></i>
+                        <span class="sidebar-label">Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="campanias.html" class="btn btn-primary w-100 text-start d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-bullhorn"></i>
+                        <span class="sidebar-label">Campañas</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="../tareas/tareas.html"
+                        class="btn btn-primary w-100 text-start d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span class="sidebar-label">Tareas</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="../notificaciones/notificaciones.html"
+                        class="btn btn-primary w-100 text-start d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="sidebar-label">Notificaciones</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="../reportes/reportes.html"
+                        class="btn btn-primary w-100 text-start d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span class="sidebar-label">Reportes</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="../usuarios/usuarios.html"
+                        class="btn btn-primary w-100 text-start d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="sidebar-label">Usuarios</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="../auditoria/auditoria.html"
+                        class="btn btn-primary w-100 text-start d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                        <span class="sidebar-label">Auditoría</span>
+                    </a>
+                </li>
+
+
+            </ul>
+        </aside>
+
+        <div class="main flex-grow-1 d-flex flex-column">
+            <header class="navbar navbar-light bg-white border-bottom px-3 py-2 shadow-sm">
+                <button class="btn btn-light border toggle-btn me-3" onclick="toggleSidebar()" type="button">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="flex-grow-1 me-3">
+                    <input class="form-control" placeholder="Buscar..." />
+                </div>
+
+                <button class="btn btn-danger d-flex align-items-center gap-2 logout-btn" onclick="logout()"
+                    type="button">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Salir</span>
+                </button>
+            </header>
+
+            <div id="contenido" class="flex-grow-1 p-4">
+
+
+                <div class="container-fluid p-0">
+                    <div
+                        class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-4">
+                        <div>
+                            <h1 class="h3 fw-bold mb-1">Gestión de Campañas</h1>
+                            <p class="text-muted mb-0">Administra y monitorea todas tus campañas de marketing</p>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="abrirModal()" type="button">
+                            <i class="fa fa-plus me-2"></i> Nueva Campaña
+                        </button>
+                    </div>
+
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-12 col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white">
+                                            <i class="fa fa-search"></i>
+                                        </span>
+                                        <input id="buscar" class="form-control" placeholder="Buscar campañas..."
+                                            oninput="filtrarCampanias()">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-3">
+                                    <select class="form-select" onchange="filtrarPorEstado(this.value)">
+                                        <option value="TODAS">Todas</option>
+                                        <option value="ACTIVA">Activa</option>
+                                        <option value="PLANIFICADA">Planificada</option>
+                                        <option value="FINALIZADA">Finalizada</option>
+                                        <option value="EN PROCESO">En proceso</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-md-3 d-flex justify-content-md-end gap-2">
+                                    <button id="btnVistaGrid" class="btn btn-outline-secondary"
+                                        onclick="cambiarVista('grid')" type="button">
+                                        <i class="fa fa-th"></i>
+                                    </button>
+                                    <button id="btnVistaList" class="btn btn-primary" onclick="cambiarVista('list')"
+                                        type="button">
+                                        <i class="fa fa-bars"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-0">
+                            <div id="tablaContainer" class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Campaña</th>
+                                            <th>Tipo</th>
+                                            <th>Estado</th>
+                                            <th>Fechas</th>
+                                            <th>Presupuesto</th>
+                                            <th>Progreso</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tablaCampanias"></tbody>
+                                </table>
+                            </div>
+
+                            <div id="contenedorVista" class="row g-3 p-3 d-none"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="modalCampania" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalCampaniaTitle">Nueva Campaña</h5>
+                                <button type="button" class="btn-close" onclick="cerrarModal()"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="formCampania">
+                                    <input type="hidden" id="idCampania">
+
+                                    <div class="row g-3">
+                                        <div class="col-12 col-md-6">
+                                            <label class="form-label">Nombre</label>
+                                            <input id="nombre" class="form-control" placeholder="Nombre">
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label class="form-label">Objetivo</label>
+                                            <input id="objetivo" class="form-control" placeholder="Objetivo">
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label">Descripción</label>
+                                            <textarea id="descripcion" class="form-control" rows="3"
+                                                placeholder="Descripción"></textarea>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label class="form-label">Fecha de Inicio</label>
+                                            <input id="fechaInicio" type="date" class="form-control">
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label class="form-label">Fecha de Fin</label>
+                                            <input id="fechaFin" type="date" class="form-control">
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label class="form-label">Presupuesto</label>
+                                            <input id="presupuesto" type="number" class="form-control"
+                                                placeholder="Presupuesto">
+                                        </div>
+                                        <div class="col-12 col-md-3">
+                                            <label class="form-label">Estado</label>
+                                            <select id="estado" class="form-select">
+                                                <option value="1">Activa</option>
+                                                <option value="2">En proceso</option>
+                                                <option value="3">Finalizada</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 col-md-3">
+                                            <label class="form-label">Tipo</label>
+                                            <select id="tipo" class="form-select">
+                                                <option value="1">Marketing Digital</option>
+                                                <option value="2">Publicidad</option>
+                                                <option value="3">Email Marketing</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="btnCancelarModal" type="button" class="btn btn-secondary"
+                                    onclick="cerrarModal()">Cancelar</button>
+                                <button id="btnGuardarModal" type="button" class="btn btn-primary"
+                                    onclick="guardarOActualizar()">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="modalConfirmEliminar" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Confirmar eliminación</h5>
+                                <button type="button" class="btn-close" onclick="cerrarModalEliminar()"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="mb-0">¿Deseas eliminar la campaña <strong
+                                        id="nombreCampaniaEliminar"></strong>?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    onclick="cerrarModalEliminar()">Cancelar</button>
+                                <button type="button" class="btn btn-danger"
+                                    onclick="eliminarConfirmado()">Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="campanias.js"></script>
+</body>
+
+</html>

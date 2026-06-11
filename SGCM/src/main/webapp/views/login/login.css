@@ -1,0 +1,35 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f8fafc;
+}
+
+.hero-panel {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+}
+
+.logo-badge {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.stat-card {
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(8px);
+}
+
+.card {
+    border-radius: 1rem;
+}

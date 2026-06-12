@@ -12,12 +12,12 @@ import pe.edu.sgcm.Repositories.Implementation.ReporteRepository;
 import pe.edu.sgcm.Repositories.Interface.IReporteRepository;
 import pe.edu.sgcm.Services.Interface.IReporteService;
 
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import java.io.ByteArrayOutputStream;
 import pe.edu.sgcm.DTOs.Responses.ReporteCampaniaEmpresaResponse;
 import pe.edu.sgcm.DTOs.Responses.ReporteDetalleEmpresaResponse;
+
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -119,6 +119,7 @@ public class ReporteService implements IReporteService {
             row.createCell(3).setCellValue(r.getProspectos());
             row.createCell(4).setCellValue(conversion);
         }
+        
 
         CellStyle percentStyle = workbook.createCellStyle();
         percentStyle.setDataFormat(workbook.createDataFormat().getFormat("0.00%"));
